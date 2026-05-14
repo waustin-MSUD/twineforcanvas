@@ -1,4 +1,4 @@
-Twine to SCORM  
+# Twine to SCORM  
 (now with scoring)  
 This guide walks you through dropping your Twine simulation into the prebuilt SCORM template folder so it can report results to Canvas. Creating a Twine sim with scoring isn’t covered here; just the SCORM preparation.  
 # What You Need  
@@ -6,7 +6,8 @@ This guide walks you through dropping your Twine simulation into the prebuilt SC
 - The SCORM template zip file  
 - A text editor  
 - An app to create zip files  
-# Assumptions Made  
+# Assumptions Made
+- I'm only familiar with Sugarcube. The "Step 1" scripts are made for that format. 
 - If graded, your simulation uses a variable called $score throughout.  
 - The published Twine file is called index.html. All lowercase. No spaces.  
 - Any media is “hard coded” in Twine to point to folders called images, videos, and sounds.  
@@ -15,9 +16,9 @@ This guide walks you through dropping your Twine simulation into the prebuilt SC
 In the final passage (or where the learner gets their final score), add one script.  
 ### For a Scoring Activity  
 This can even be attached to a button inside the passage. It gives the SCORM three pieces of information: the actual score earned by the user ($score), the maximum possible score for the activity, and what’s to be considered a passing score for the activity.  
-| |  
-|-|  
-| <<script>>  if (typeof window.setScormScore === "function") {    window.setScormScore($score, 100, 70);  }<</script>> |   
+```
+<<script>>  if (typeof window.setScormScore === "function") {    window.setScormScore($score, 100, 70);  }<</script>>
+```  
    
 ### For a Completion Activity  
 This can even be attached to a button inside the passage. It tells the SCORM to report “complete” status to the LMS.  
