@@ -1,0 +1,259 @@
+:: StoryTitle
+SCORM Score Test
+
+
+:: StoryData
+{
+	"ifid": "8E4F6A2C-3B91-4D7E-A8F2-1C5B9D6E0F47",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start",
+	"zoom": 1
+}
+
+
+:: StoryInit
+<<set $score to 50>>
+
+
+:: Start
+<div id="score-test">
+
+<div class="score-label">Score to send to Canvas</div>
+
+<div class="score-display">
+	<<button "−">>
+		<<if $score gte 1>>
+			<<set $score to $score - 1>>
+			<<replace "#score-value">>$score<</replace>>
+		<</if>>
+	<</button>>
+
+	<span id="score-value">$score</span>
+
+	<<button "+">>
+		<<if $score lte 99>>
+			<<set $score to $score + 1>>
+			<<replace "#score-value">>$score<</replace>>
+		<</if>>
+	<</button>>
+</div>
+
+<div class="score-range">out of 100</div>
+
+<div class="submit-row">
+	<<button "Submit Score">>
+		<<script>>
+			if (typeof window.setScormScore === "function") {
+				window.setScormScore(State.variables.score, 100, 70);
+			} else {
+				console.warn("setScormScore not found — running outside SCORM wrapper");
+			}
+		<</script>>
+		<<goto "Done">>
+	<</button>>
+</div>
+
+</div>
+
+
+:: Done
+<div id="done-screen">
+
+<div class="checkmark">✓</div>
+
+<div class="done-title">All done!</div>
+
+<div class="done-message">Your score of <<print $score>>/100 has been submitted.</div>
+
+<div class="done-hint">You can now close this window. Canvas will record the grade automatically.</div>
+
+</div>
+
+
+:: StoryStylesheet [stylesheet]
+/* ============================================================
+   SCORM test story — minimal, centered, friendly
+   ============================================================ */
+
+body {
+	background: #f5f3ee;
+	color: #2a2a2a;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+
+#story {
+	margin: 0 auto;
+	padding: 4em 1em;
+}
+
+#passages {
+	max-width: 100%;
+	border-left: none;
+	margin: 0;
+	padding: 0;
+}
+
+.passage {
+	font-size: 1.05em;
+	line-height: 1.5;
+}
+
+/* Hide the default story menu/title for a clean test page */
+#ui-bar {
+	display: none;
+}
+
+#story:not(.ui-bar-hidden) {
+	margin-left: 0;
+}
+
+/* ---------- Start passage ---------- */
+
+#score-test {
+	max-width: 420px;
+	margin: 0 auto;
+	padding: 2.5em 2em;
+	background: #ffffff;
+	border-radius: 14px;
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+	text-align: center;
+}
+
+.score-label {
+	font-size: 0.85em;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #888;
+	margin-bottom: 1.5em;
+}
+
+.score-display {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.2em;
+	margin-bottom: 0.4em;
+}
+
+#score-value {
+	font-size: 4em;
+	font-weight: 300;
+	color: #1f3864;
+	min-width: 2.2em;
+	display: inline-block;
+	font-variant-numeric: tabular-nums;
+}
+
+.score-range {
+	font-size: 0.9em;
+	color: #999;
+	margin-bottom: 2.2em;
+}
+
+/* Style the +/- buttons */
+.score-display button {
+	width: 3em;
+	height: 3em;
+	border-radius: 50%;
+	border: 2px solid #d0d4dc;
+	background: #ffffff;
+	color: #1f3864;
+	font-size: 1.4em;
+	font-weight: 400;
+	cursor: pointer;
+	transition: all 0.15s ease;
+	padding: 0;
+	line-height: 1;
+}
+
+.score-display button:hover {
+	border-color: #1f3864;
+	background: #1f3864;
+	color: #ffffff;
+	transform: scale(1.05);
+}
+
+.score-display button:active {
+	transform: scale(0.95);
+}
+
+/* Submit button */
+.submit-row {
+	margin-top: 1em;
+}
+
+.submit-row button {
+	background: #1f3864;
+	color: #ffffff;
+	border: none;
+	padding: 0.85em 2.4em;
+	border-radius: 8px;
+	font-size: 1em;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.15s ease;
+	letter-spacing: 0.02em;
+}
+
+.submit-row button:hover {
+	background: #2e75b6;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(31, 56, 100, 0.25);
+}
+
+.submit-row button:active {
+	transform: translateY(0);
+}
+
+/* ---------- Done passage ---------- */
+
+#done-screen {
+	max-width: 420px;
+	margin: 0 auto;
+	padding: 3em 2em;
+	background: #ffffff;
+	border-radius: 14px;
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+	text-align: center;
+}
+
+.checkmark {
+	width: 70px;
+	height: 70px;
+	margin: 0 auto 1.2em;
+	background: #2e8b57;
+	color: #ffffff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2.2em;
+	line-height: 1;
+	animation: pop 0.4s ease-out;
+}
+
+@keyframes pop {
+	0%   { transform: scale(0); }
+	70%  { transform: scale(1.15); }
+	100% { transform: scale(1); }
+}
+
+.done-title {
+	font-size: 1.8em;
+	font-weight: 300;
+	color: #1f3864;
+	margin-bottom: 0.6em;
+}
+
+.done-message {
+	font-size: 1.1em;
+	color: #2a2a2a;
+	margin-bottom: 1.5em;
+}
+
+.done-hint {
+	font-size: 0.9em;
+	color: #888;
+	font-style: italic;
+}
