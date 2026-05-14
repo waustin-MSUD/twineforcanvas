@@ -1,6 +1,6 @@
 # Twine to SCORM  
 (now with scoring)  
-This guide walks you through dropping your Twine simulation into the prebuilt SCORM template folder so it can report results to Canvas. Creating a Twine sim with scoring isn’t covered here; just the SCORM preparation.  
+This guide walks you through dropping your Twine simulation into the prebuilt SCORM template folder so it can report results (either completion or a score) to Canvas. Creating a Twine story isn’t covered here; just the SCORM preparation.  
 # What You Need  
 - A finished twine story  
 - The SCORM template zip file  
@@ -41,12 +41,11 @@ Open the HTML file with your text editor and insert the following code block jus
 <script src="SCORM_API_wrapper.js"></script>
 
 <script>
-  // SCORM 2004 glue code — same for every Twine project
+  // SCORM 2004 glue
   var scorm = pipwerks.SCORM;
   scorm.version = "2004";
   var scormInitialized = false;
  
-  // Call once when the page loads
   function initSCORM() {
     scormInitialized = scorm.init();
     if (!scormInitialized) {
@@ -85,14 +84,14 @@ Open the HTML file with your text editor and insert the following code block jus
     scormInitialized = false;
   }
  
-  // Run init as soon as the page is ready
+  // Run as soon as the page is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initSCORM);
   } else {
     initSCORM();
   }
  
-  // Always terminate on unload — this is what posts the score to Canvas
+  // posts the score to Canvas
   window.addEventListener("beforeunload", terminateSCORM);
   window.addEventListener("pagehide", terminateSCORM);
 </script>
@@ -101,13 +100,11 @@ Open the HTML file with your text editor and insert the following code block jus
 ### For a Completion Activity  
 ```
 <script>
-  // SCORM 2004 glue code — completion-only variant
-  // Same for every Twine project
+  // SCORM 2004 glue (completion)
   var scorm = pipwerks.SCORM;
   scorm.version = "2004";
   var scormInitialized = false;
  
-  // Call once when the page loads
   function initSCORM() {
     scormInitialized = scorm.init();
     if (!scormInitialized) {
@@ -190,6 +187,9 @@ Drop your HTML file into the template folder. Any media should be dropped into t
       <file href="index.html"/>
       <file href="SCORM_API_wrapper.js"/>           
       <!-- Add a <file href="..."/> line for every other asset -->
+      <!-- Add a <file href="images/..."/> line for every image -->
+      <!-- Add a <file href="videos/..."/> line for every video -->
+      <!-- Add a <file href="sounds/..."/> line for every sound file -->
     </resource>
   </resources>
 </manifest>
