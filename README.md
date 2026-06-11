@@ -35,7 +35,7 @@ This can even be attached to a button inside the passage. It tells the SCORM to 
 ## Step 2: Publish the story  
 Save the Twine to a file named index.html.  
 ## Step 3: Add the SCORM “glue” to the HTML file  
-Open the HTML file with your text editor and insert the following code block just before </head>. Be sure to save the file afterward.  
+Open the HTML file with your text editor and insert the following code block just before `</head>`. Be sure to save the file afterward.  
 ### For a Scoring Activity  
 ```
 <script src="SCORM_API_wrapper.js"></script>
